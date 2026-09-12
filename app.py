@@ -26,6 +26,25 @@ model = joblib.load('model.sav')
 
 app = Flask(__name__)
 
+def init_db():
+    con = sqlite3.connect('signup.db')
+    cur = con.cursor()
+
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS info (
+            user VARCHAR(250),
+            email VARCHAR(250),
+            password VARCHAR(250),
+            mobile INT,
+            name VARCHAR(250)
+        )
+    """)
+
+    con.commit()
+    con.close()
+
+
+init_db()
 
 @app.route('/')
 def index():
